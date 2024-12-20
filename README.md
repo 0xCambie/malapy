@@ -1,5 +1,5 @@
 # malapy
-Simplistic Python CLI Tool to gather information about window API system calls.
+Simplistic Python CLI Tool to gather information about windows API system calls.
 
 Pretty easy to use:
 ```
