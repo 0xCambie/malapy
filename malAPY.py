@@ -7,25 +7,40 @@ import argparse
 
 base_url = "https://malapi.io/winapi/"
 
+information = {
+    "Enumeration": "System Enumeration",
+    "Injection": "Process-related attacks (DLL Injection, Process Hollowing)",
+    "Evasion": "Evasive Behaviour",
+    "Spying": "Spying on user actions",
+    "Internet": "Malicious Internet Connectivity (Downloads, Exfiltration, C2)",
+    "Anti-Debugging": "Anti-Reverse Engineering Behaviour.",
+    "Ransomware": "Cryptografic functions used by Ransomware",
+    "Helper": "Functions that may add malware."
+}
+
+
 def find_information(apicall):
     r = requests.get(base_url+f"{apicall}").text
     soup = BeautifulSoup(r, features="lxml")
     title = soup.title.text
-    function_name = soup.find_all("div", {"class": "content"})[0].get_text("", strip=True)
-    description = soup.find_all("div", {"class": "content"})[1].get_text("", strip=True)
-    library = soup.find_all("div", {"class": "content"})[2].get_text("", strip=True)
-    associated_attacks = soup.find_all("span", {"class": "attack-container"})
-    attacks = ""
-    for attack in associated_attacks:
-        attacks = attacks + (attack.get_text("", strip=True)) + " "    
-    documentation_link = soup.find_all('a')[-1]['href']
+    try:
+        function_name = soup.find_all("div", {"class": "content"})[0].get_text("", strip=True)
+        description = soup.find_all("div", {"class": "content"})[1].get_text("", strip=True)
+        library = soup.find_all("div", {"class": "content"})[2].get_text("", strip=True)
+        associated_attacks = soup.find_all("span", {"class": "attack-container"})
+        attacks = ""
+        for attack in associated_attacks:
+            attacks = attacks + (attack.get_text("", strip=True)) + " "    
+        documentation_link = soup.find_all('a')[-1]['href']
 
+        print(f"Function Call:\n\t{function_name}")
+        print(f"General Description:\n\t{description}")
+        print(f"Associated Library:\n\t{library}")
+        print(f"Associated Attacks:\n\t{attacks}")
+        print(f"Official Documentation:\n\t{documentation_link}")
+    except:
+        print(f"No entry in malAPI for {apicall}")
 
-    print(f"Function Call:\n\t{function_name}")
-    print(f"General Description:\n\t{description}")
-    print(f"Associated Library:\n\t{library}")
-    print(f"Associated Attacks:\n\t{attacks}")
-    print(f"Official Documentation:\n\t{documentation_link}")
 
 if __name__ == '__main__':
     
