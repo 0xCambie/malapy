@@ -7,17 +7,6 @@ import argparse
 
 base_url = "https://malapi.io/winapi/"
 
-information = {
-    "Enumeration": "System Enumeration",
-    "Injection": "Process-related attacks (DLL Injection, Process Hollowing)",
-    "Evasion": "Evasive Behaviour",
-    "Spying": "Spying on user actions",
-    "Internet": "Malicious Internet Connectivity (Downloads, Exfiltration, C2)",
-    "Anti-Debugging": "Anti-Reverse Engineering Behaviour.",
-    "Ransomware": "Cryptografic functions used by Ransomware",
-    "Helper": "Functions that may add malware."
-}
-
 
 def find_information(apicall):
     r = requests.get(base_url+f"{apicall}").text
